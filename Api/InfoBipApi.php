@@ -96,6 +96,57 @@ class InfoBipApi extends AbstractSmsApi
             return false;
         }
 
+        $messageBody = $content;
+        $remove_MauticTrackingUrl = true;
+
+        //****** This block removes Mautic tracking URL from the message body. Although it is desirable due to length limitations, it may cause a performance degradation.
+        if($remove_MauticTrackingUrl){
+            
+            preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $content, $matches);
+            $messageLinks = $matches;
+
+            foreach($messageLinks as $messageLink) {
+                if(strlen($messageLink[0]) < 5){
+                    continue;
+                }
+
+                $resolvedUrl = $messageLink[0];
+                $maxJumps = 0;
+                while(parse_url($resolvedUrl, PHP_URL_HOST) == parse_url($messageLink[0], PHP_URL_HOST) && $maxJumps < 3){
+                    stream_context_set_default(
+                        array(
+                            'http' => array(
+                                'method' => 'GET'
+                            )
+                        )
+                    );
+
+                    $ch = curl_init();
+                    curl_setopt($ch, CURLOPT_URL, $resolvedUrl);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                    curl_setopt($ch, CURLOPT_HEADER,true);
+
+                    $result = curl_exec($ch);
+
+                    curl_close($ch);
+
+                    list($headers, $content) = explode("\r\n\r\n",$result,2);
+
+                    foreach (explode("\r\n",$headers) as $hdr){
+                        if(strpos($hdr, 'Location') === false){
+                            continue;
+                        }
+                        
+                        $resolvedUrl = str_replace('Location: ', '', $hdr);
+                            break;
+                    }
+                    $maxJumps++;
+                }
+                $messageBody = str_replace($messageLink[0], $resolvedUrl, $messageBody);
+            }
+        }
+        //****** End of Mautic tracking URL removal
+
         try{
             $number = '+55' . $number;
             
@@ -111,7 +162,7 @@ class InfoBipApi extends AbstractSmsApi
             $data = [
                 'from' => "InfoSMS",
                 'to' => $number,
-                'text' => $content
+                'text' => $messageBody
             ];
             
             curl_setopt($curl, CURLOPT_URL, $url);
