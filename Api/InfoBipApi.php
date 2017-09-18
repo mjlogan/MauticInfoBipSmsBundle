@@ -111,7 +111,9 @@ class InfoBipApi extends AbstractSmsApi
             $data = [
                 'from' => "InfoSMS",
                 'to' => $number,
-                'text' => $messageBody
+                'text' => $messageBody,
+                'language' => ['languageCode' => 'PT'],
+                'transliteration' => 'NON_UNICODE'
             ];
 
             $curl = curl_init();            
