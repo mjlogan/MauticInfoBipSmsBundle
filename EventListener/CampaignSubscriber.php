@@ -16,7 +16,7 @@ use Mautic\CampaignBundle\Event\CampaignBuilderEvent;
 use Mautic\CampaignBundle\Event\CampaignExecutionEvent;
 use Mautic\CoreBundle\EventListener\CommonSubscriber;
 use Mautic\PluginBundle\Helper\IntegrationHelper;
-use MauticPlugin\MauticInfoBipSmsBundle\Model\SmsModel;
+use Mautic\SmsBundle\Model\SmsModel;
 use MauticPlugin\MauticInfoBipSmsBundle\SmsEvents;
 
 /**

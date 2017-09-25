@@ -85,7 +85,7 @@ class SmsSubscriber extends CommonSubscriber
      *
      * @param SmsEvent $event
      */
-    public function onPostSave(\MauticPlugin\MauticInfoBipSmsBundle\Event\SmsEvent $event)
+    public function onPostSave(SmsEvent $event)
     {
         $entity = $event->getSms();
         if ($details = $event->getChanges()) {
