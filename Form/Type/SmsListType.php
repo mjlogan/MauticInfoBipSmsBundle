@@ -62,7 +62,7 @@ class SmsListType extends AbstractType
      */
     public function getName()
     {
-        return 'sms_list';
+        return 'infobipsmssms_list';
     }
 
     /**

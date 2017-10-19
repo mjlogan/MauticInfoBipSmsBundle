@@ -173,7 +173,7 @@ class SmsType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => null,
+                'data_class' => 'MauticPlugin\MauticInfoBipSmsBundle\Entity\Sms',
             ]
         );
 

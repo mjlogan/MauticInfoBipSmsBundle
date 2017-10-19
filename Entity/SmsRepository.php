@@ -1,25 +1,18 @@
-<?php
-
-/*
- * @copyright   2016 Mautic Contributors. All rights reserved
- * @author      Mautic
+<?php /*
+ * @copyright 2016 Mautic Contributors. All rights reserved
+ * @author Mautic
  *
- * @link        http://mautic.org
+ * @link http://mautic.org
  *
- * @license     GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
- */
-
-namespace MauticPlugin\MauticInfoBipSmsBundle\Entity;
-
-use Doctrine\ORM\Query;
-use Doctrine\ORM\Tools\Pagination\Paginator;
-use Mautic\CoreBundle\Entity\CommonRepository;
-
-/**
+ * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
  * Class SmsRepository.
- */
-class SmsRepository extends CommonRepository
-{
+ */ 
+namespace MauticPlugin\MauticInfoBipSmsBundle\Entity; 
+use Doctrine\ORM\Query; 
+use Doctrine\ORM\Tools\Pagination\Paginator; 
+use Mautic\CoreBundle\Entity\CommonRepository; 
+
+ class SmsRepository extends CommonRepository {
     /**
      * Get a list of entities.
      *
@@ -33,16 +26,12 @@ class SmsRepository extends CommonRepository
             ->createQueryBuilder()
             ->select($this->getTableAlias())
             ->from('MauticInfoBipSmsBundle:Sms', $this->getTableAlias(), $this->getTableAlias().'.id');
-
         if (empty($args['iterator_mode'])) {
             $q->leftJoin($this->getTableAlias().'.category', 'c');
         }
-
         $args['qb'] = $q;
-
         return parent::getEntities($args);
     }
-
     /**
      * Get amounts of sent and read emails.
      *
@@ -54,17 +43,14 @@ class SmsRepository extends CommonRepository
         $q->select('SUM(e.sentCount) as sent_count')
             ->from('MauticInfoBipSmsBundle:Sms', 'e');
         $results = $q->getQuery()->getSingleResult(Query::HYDRATE_ARRAY);
-
         if (!isset($results['sent_count'])) {
             $results['sent_count'] = 0;
         }
-
         return $results;
     }
-
     /**
      * @param QueryBuilder $q
-     * @param              $filter
+     * @param $filter
      *
      * @return array
      */
@@ -74,18 +60,16 @@ class SmsRepository extends CommonRepository
         if ($expr) {
             return [$expr, $parameters];
         }
-
-        $command         = $filter->command;
-        $unique          = $this->generateRandomParameterName();
+        $command = $filter->command;
+        $unique = $this->generateRandomParameterName();
         $returnParameter = false; //returning a parameter that is not used will lead to a Doctrine error
-
         switch ($command) {
             case $this->translator->trans('mautic.core.searchcommand.lang'):
-                $langUnique      = $this->generateRandomParameterName();
-                $langValue       = $filter->string.'_%';
+                $langUnique = $this->generateRandomParameterName();
+                $langValue = $filter->string.'_%';
                 $forceParameters = [
                     $langUnique => $langValue,
-                    $unique     => $filter->string,
+                    $unique => $filter->string,
                 ];
                 $expr = $q->expr()->orX(
                     $q->expr()->eq('e.language', ":$unique"),
@@ -94,21 +78,17 @@ class SmsRepository extends CommonRepository
                 $returnParameter = true;
                 break;
         }
-
         if ($expr && $filter->not) {
             $expr = $q->expr()->not($expr);
         }
-
         if (!empty($forceParameters)) {
             $parameters = $forceParameters;
         } elseif ($returnParameter) {
-            $string     = ($filter->strict) ? $filter->string : "%{$filter->string}%";
+            $string = ($filter->strict) ? $filter->string : "%{$filter->string}%";
             $parameters = ["$unique" => $string];
         }
-
         return [$expr, $parameters];
     }
-
     /**
      * @return array
      */
@@ -122,10 +102,8 @@ class SmsRepository extends CommonRepository
             'mautic.core.searchcommand.category',
             'mautic.core.searchcommand.lang',
         ];
-
         return array_merge($commands, parent::getSearchCommands());
     }
-
     /**
      * @return string
      */
@@ -135,7 +113,6 @@ class SmsRepository extends CommonRepository
             ['e.name', 'ASC'],
         ];
     }
-
     /**
      * @return string
      */
@@ -143,34 +120,30 @@ class SmsRepository extends CommonRepository
     {
         return 'e';
     }
-
     /**
      * Up the click/sent counts.
      *
-     * @param        $id
+     * @param $id
      * @param string $type
-     * @param int    $increaseBy
+     * @param int $increaseBy
      */
     public function upCount($id, $type = 'sent', $increaseBy = 1)
     {
         try {
             $q = $this->_em->getConnection()->createQueryBuilder();
-
             $q->update(MAUTIC_TABLE_PREFIX.'sms_messages')
                 ->set($type.'_count', $type.'_count + '.(int) $increaseBy)
                 ->where('id = '.(int) $id);
-
             $q->execute();
         } catch (\Exception $exception) {
             // not important
         }
     }
-
     /**
      * @param string $search
-     * @param int    $limit
-     * @param int    $start
-     * @param bool   $viewOther
+     * @param int $limit
+     * @param int $start
+     * @param bool $viewOther
      * @param string $smsType
      *
      * @return array
@@ -179,7 +152,6 @@ class SmsRepository extends CommonRepository
     {
         $q = $this->createQueryBuilder('e');
         $q->select('partial e.{id, name, language}');
-
         if (!empty($search)) {
             if (is_array($search)) {
                 $search = array_map('intval', $search);
@@ -190,25 +162,20 @@ class SmsRepository extends CommonRepository
                   ->setParameter('search', "%{$search}%");
             }
         }
-
         if (!$viewOther) {
             $q->andWhere($q->expr()->eq('e.createdBy', ':id'))
                 ->setParameter('id', $this->currentUser->getId());
         }
-
         if (!empty($smsType)) {
             $q->andWhere(
                 $q->expr()->eq('e.smsType', $q->expr()->literal($smsType))
             );
         }
-
         $q->orderBy('e.name');
-
         if (!empty($limit)) {
             $q->setFirstResult($start)
                 ->setMaxResults($limit);
         }
-
         return $q->getQuery()->getArrayResult();
     }
 }

@@ -11,7 +11,7 @@
 
 $view->extend('MauticCoreBundle:FormTheme:form_simple.html.php');
 $view->addGlobal('translationBase', 'mautic.sms');
-$view->addGlobal('mauticContent', 'sms');
+$view->addGlobal('mauticContent', 'infobipsms');
 
 ?>
 

@@ -12,14 +12,14 @@
 return [
     'services' => [
         'events' => [
-            'mautic.sms.infobipcampaignbundle.subscriber' => [
+            'mautic.infobip.sms.campaignbundle.subscriber' => [
                 'class'     => 'MauticPlugin\MauticInfoBipSmsBundle\EventListener\CampaignSubscriber',
                 'arguments' => [
                     'mautic.helper.integration',
-                    'mautic.sms.model.sms',
+                    'mautic.infobip.sms.model.sms',
                 ],
             ],
-            'mautic.sms.mauticinfobipsmsbundle.subscriber' => [
+            'mautic.infobip.sms.mauticinfobipsmsbundle.subscriber' => [
                 'class'     => 'MauticPlugin\MauticInfoBipSmsBundle\EventListener\SmsSubscriber',
                 'arguments' => [
                     'mautic.core.model.auditlog',
@@ -28,19 +28,19 @@ return [
                     'mautic.asset.helper.token',
                 ],
             ],
-            'mautic.sms.infobipchannel.subscriber' => [
+            'mautic.infobip.sms.channel.subscriber' => [
                 'class'     => \MauticPlugin\MauticInfoBipSmsBundle\EventListener\ChannelSubscriber::class,
                 'arguments' => [
                     'mautic.helper.integration',
                 ],
             ],
-            'mautic.sms.infobipmessage_queue.subscriber' => [
+            'mautic.infobip.sms.message_queue.subscriber' => [
                 'class'     => \MauticPlugin\MauticInfoBipSmsBundle\EventListener\MessageQueueSubscriber::class,
                 'arguments' => [
-                    'mautic.sms.model.sms',
+                    'mautic.infobip.sms.model.sms',
                 ],
             ],
-            'mautic.sms.infobipstats.subscriber' => [
+            'mautic.infobip.sms.stats.subscriber' => [
                 'class'     => \MauticPlugin\MauticInfoBipSmsBundle\EventListener\StatsSubscriber::class,
                 'arguments' => [
                     'doctrine.orm.entity_manager',
@@ -48,40 +48,40 @@ return [
             ],
         ],
         'forms' => [
-            'mautic.form.type.infobipsms' => [
+            'mautic.infobip.form.type.sms' => [
                 'class'     => 'MauticPlugin\MauticInfoBipSmsBundle\Form\Type\SmsType',
                 'arguments' => 'mautic.factory',
-                'alias'     => 'sms',
+                'alias'     => 'infobipsms',
             ],
-            'mautic.form.type.infobipsmsconfig' => [
+            'mautic.infobip.form.type.infobipsmsconfig' => [
                 'class' => 'MauticPlugin\MauticInfoBipSmsBundle\Form\Type\ConfigType',
-                'alias' => 'smsconfig',
+                'alias' => 'infobipsmsconfig',
             ],
-            'mautic.form.type.infobipsmssend_list' => [
+            'mautic.infobip.form.type.infobipsmssend_list' => [
                 'class'     => 'MauticPlugin\MauticInfoBipSmsBundle\Form\Type\SmsSendType',
                 'arguments' => 'router',
-                'alias'     => 'smssend_list',
+                'alias'     => 'infobipsmssend_list',
             ],
-            'mautic.form.type.infobipsms_list' => [
+            'mautic.infobip.form.type.infobipsmssms_list' => [
                 'class' => 'MauticPlugin\MauticInfoBipSmsBundle\Form\Type\SmsListType',
-                'alias' => 'sms_list',
+                'alias' => 'infobipsmssms_list',
             ],
         ],
         'helpers' => [
-            'mautic.helper.infobipsms' => [
+            'mautic.infobip.helper.sms' => [
                 'class'     => 'MauticPlugin\MauticInfoBipSmsBundle\Helper\SmsHelper',
                 'arguments' => [
                     'doctrine.orm.entity_manager',
                     'mautic.lead.model.lead',
                     'mautic.helper.phone_number',
-                    'mautic.sms.model.sms',
+                    'mautic.infobip.sms.model.sms',
                     'mautic.helper.integration',
                 ],
-                'alias' => 'sms_helper',
+                'alias' => 'infobipsms_helper',
             ],
         ],
         'other' => [
-            'mautic.infobipsms.api' => [
+            'mautic.infobip.sms.api' => [
                 'class'     => 'MauticPlugin\MauticInfoBipSmsBundle\Api\InfoBipApi',
                 'arguments' => [
                     'mautic.page.model.trackable',
@@ -89,17 +89,17 @@ return [
                     'mautic.helper.integration',
                     'monolog.logger.mautic',
                 ],
-                'alias' => 'sms_api',
+                'alias' => 'infobipsms_api',
             ],
         ],
         'models' => [
-            'mautic.infobipsms.model.sms' => [
+            'mautic.infobip.sms.model.sms' => [
                 'class'     => 'MauticPlugin\MauticInfoBipSmsBundle\Model\SmsModel',
                 'arguments' => [
                     'mautic.page.model.trackable',
                     'mautic.lead.model.lead',
                     'mautic.channel.model.queue',
-                    'mautic.sms.api',
+                    'mautic.infobip.sms.api',
                 ],
             ],
         ],
