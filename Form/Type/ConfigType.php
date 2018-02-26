@@ -63,7 +63,7 @@ class ConfigType extends AbstractType
                     'attr'  => [
                         'tooltip'      => 'mautic.sms.config.form.sms.username.tooltip',
                         'class'        => 'form-control',
-                        'data-show-on' => '{"config_smsconfig_sms_enabled_1":"checked"}',
+                        'data-show-on' => '{"config_infobipsmsconfig_sms_enabled_1":"checked"}',
                     ],
                     'constraints' => $constraints,
                 ]
@@ -77,7 +77,7 @@ class ConfigType extends AbstractType
                     'attr'  => [
                         'tooltip'      => 'mautic.sms.config.form.sms.password.tooltip',
                         'class'        => 'form-control',
-                        'data-show-on' => '{"config_smsconfig_sms_enabled_1":"checked"}',
+                        'data-show-on' => '{"config_infobipsmsconfig_sms_enabled_1":"checked"}',
                     ],
                     'constraints' => $constraints,
                 ]
@@ -128,6 +128,6 @@ class ConfigType extends AbstractType
      */
     public function getName()
     {
-        return 'smsconfig';
+        return 'infobipsmsconfig';
     }
 }

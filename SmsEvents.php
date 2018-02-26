@@ -25,7 +25,7 @@ final class SmsEvents
      *
      * @var string
      */
-    const TOKEN_REPLACEMENT = 'mautic.sms_token_replacement';
+    const TOKEN_REPLACEMENT = 'mautic.infobip.sms_token_replacement';
 
     /**
      * The mautic.sms_on_send event is thrown when a sms is sent.
@@ -35,7 +35,7 @@ final class SmsEvents
      *
      * @var string
      */
-    const SMS_ON_SEND = 'mautic.sms_on_send';
+    const SMS_ON_SEND = 'mautic.infobip.sms_on_send';
 
     /**
      * The mautic.sms_pre_save event is thrown right before a sms is persisted.
@@ -45,7 +45,7 @@ final class SmsEvents
      *
      * @var string
      */
-    const SMS_PRE_SAVE = 'mautic.sms_pre_save';
+    const SMS_PRE_SAVE = 'mautic.infobip.sms_pre_save';
 
     /**
      * The mautic.sms_post_save event is thrown right after a sms is persisted.
@@ -55,7 +55,7 @@ final class SmsEvents
      *
      * @var string
      */
-    const SMS_POST_SAVE = 'mautic.sms_post_save';
+    const SMS_POST_SAVE = 'mautic.infobip.sms_post_save';
 
     /**
      * The mautic.sms_pre_delete event is thrown prior to when a sms is deleted.
@@ -65,7 +65,7 @@ final class SmsEvents
      *
      * @var string
      */
-    const SMS_PRE_DELETE = 'mautic.sms_pre_delete';
+    const SMS_PRE_DELETE = 'mautic.infobip.sms_pre_delete';
 
     /**
      * The mautic.sms_post_delete event is thrown after a sms is deleted.
@@ -75,7 +75,7 @@ final class SmsEvents
      *
      * @var string
      */
-    const SMS_POST_DELETE = 'mautic.sms_post_delete';
+    const SMS_POST_DELETE = 'mautic.infobip.sms_post_delete';
 
     /**
      * The mautic.sms.on_campaign_trigger_action event is fired when the campaign action triggers.
@@ -85,5 +85,5 @@ final class SmsEvents
      *
      * @var string
      */
-    const ON_CAMPAIGN_TRIGGER_ACTION = 'mautic.sms.on_campaign_trigger_action';
+    const ON_CAMPAIGN_TRIGGER_ACTION = 'mautic.infobip.sms.on_campaign_trigger_action';
 }

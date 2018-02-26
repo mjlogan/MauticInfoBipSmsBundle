@@ -67,7 +67,7 @@ class ChannelSubscriber extends CommonSubscriber
                             'asset.download',
                             'form.submit',
                         ],
-                        'lookupFormType' => 'sms_list',
+                        'lookupFormType' => 'infobipsmssms_list',
                         'repository'     => 'MauticInfoBipSmsBundle:Sms',
                     ],
                     LeadModel::CHANNEL_FEATURE   => [],

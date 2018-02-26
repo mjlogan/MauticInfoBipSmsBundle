@@ -43,7 +43,7 @@ class SmsSendType extends AbstractType
     {
         $builder->add(
             'sms',
-            'sms_list',
+            'infobipsmssms_list',
             [
                 'label'      => 'mautic.sms.send.selectsmss',
                 'label_attr' => ['class' => 'control-label'],
@@ -129,6 +129,6 @@ class SmsSendType extends AbstractType
      */
     public function getName()
     {
-        return 'smssend_list';
+        return 'infobipsmssend_list';
     }
 }
