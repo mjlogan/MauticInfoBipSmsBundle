@@ -9,7 +9,8 @@ The lack a of an updated version of the original Infobip plugin as well as the a
 
 ## Installation
 
-- Copy the MauticInfoBipSmsBundle to the plugins folder.
+- Create a new "MauticInfoBipSmsBundle" folder in the plugins folder
+- Copy the plugins files into the MauticInfoBipSmsBundle folder.
 - Go to the Configuration -> Plugins Settings, in Mautic web interface.
 - Click on Install/Upgrade Plugins.
 - The plugin should now be available for configuration.
