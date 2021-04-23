@@ -1,3 +1,6 @@
+## Notice - End of life
+This repo is no longer being updated for new issues or compatibility with new Mautic versions later tha 2.8.2. Contributions/forks to update the plugin are welcome.
+
 ## Synopsis
 
 This plugin allows to send SMS messages through Infobip service provider API.
